@@ -1,3 +1,4 @@
+// select image
 const enlargedImage = document.querySelector(".right-side")
 const images = document.querySelectorAll(".gallery img").forEach(image => {
   image.addEventListener("click", () => {
@@ -5,61 +6,79 @@ const images = document.querySelectorAll(".gallery img").forEach(image => {
   });
 });
 
+// enlarge image
 function addImage(clickedImage) {
-    let divWidth = document.querySelector(".right-side").offsetWidth;
-    let divHeight = document.querySelector(".right-side").offsetHeight;
 
     let selectedImage = clickedImage.src;
     let image = new Image();
     image.src = selectedImage;
-    let proportion = 0;
     image.onload = () => {
-        image.naturalHeight > image.naturalWidth
-        ? (proportion = image.naturalHeight / image.naturalWidth, divWidth = Math.floor(divHeight / proportion))
-        : (proportion = image.naturalWidth / image.naturalHeight, divHeight = Math.floor(divWidth / proportion));
         let rootImage = image.src.split('/');
         let imgaLocation = './' + rootImage[8] + '/' + rootImage[9];
         enlargedImage.style.backgroundImage =  'url(' + imgaLocation + ')';
     }
 }
 // upload image https://stackoverflow.com/questions/22087076/how-to-make-a-simple-image-upload-using-javascript-html
-//  all this will be changed to https://www.w3schools.com/howto/howto_js_draggable.asp
-let paragraph = document.querySelector('.right-side p');
 
-const topValue = document.getElementById("top")
-const rightValue = document.getElementById("right");
-const botValue = document.getElementById("bot");
-const leftValue = document.getElementById("left");
+// draggable text
+dragElement(document.getElementById("grab"));
 
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.querySelector('#grab p')) {
+    // if present, the header is where you move the DIV from:
+    document.querySelector('#grab p').onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
 
-let inputs = {'top': topValue, 'right': rightValue, 'bot': botValue, 'left': leftValue};
-// inputs['top'] = topValue;
-// inputs['right'] = rightValue;
-// inputs['bot'] = botValue;
-// inputs['left'] = leftValue;
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
 
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
 
-Object.keys(inputs).forEach((input) => {
-    inputs[input].addEventListener('keyup', event => {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            switch(input) {
-                case 'top':
-                    paragraph.style.top = parseInt(input.value);
-                    console.log(input.value)
-                    break;
-                case 'right':
-                    paragraph.style.right = input.valuel
-                    break;
-                case 'bot':
-                    paragraph.style.bottom = input.valuel
-                    break;
-                case 'left':
-                    paragraph.style.left = input.valuel
-                    break;
-                    default: 'error';
-            }
-            console.log(paragraph.style.top)
-        }
-    });
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+// select text color
+let selectColor = document.getElementById('color');
+selectColor.addEventListener('change', () => {
+    document.querySelector('#grab p').style.color = selectColor.value;
+});
+
+const userText = document.getElementById('userText')
+userText
+.addEventListener('change', () => {
+    document.querySelector('#grab p').innerHTML = userText.value;
+});
+
+const fontSize = document.getElementById('font-size')
+fontSize
+.addEventListener('change', () => {
+    console.log(fontSize.value)
+    document.querySelector('#grab p').style.fontSize = fontSize.value
 });

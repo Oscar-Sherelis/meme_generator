@@ -9,10 +9,17 @@
   <body>
     <header>
       <nav>
-        top<input type="number" id="top" /> 
-        right<input type="number" id="right"/>
-        bottom<input type="number" id="bot" />
-        left<input type="number" id="left"/>
+        <label>
+        Select text color
+        <input type="color" id="color" /> 
+      </label>
+      <label>
+       Enter text and press enter<input type="text" id="userText"/>
+      </label>
+      <label>
+        Font size
+        <input type="range" name="points" min="16" id="font-size">
+      </label>
       </nav>
     </header>
     <main>
@@ -27,8 +34,8 @@
         </div>
       </div>
       <div class="right-side">
-          <div class="grab">
-            <p>dwadad</p>
+          <div id="grab">
+            <p>Grab me</p>
           </div>
       </div>
     </main>

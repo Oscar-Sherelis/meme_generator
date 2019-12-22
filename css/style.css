@@ -1,44 +1,54 @@
 main {
-    display: flex;
-    min-height: 100vh;
-    max-height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  .left-side {
-    background-color: #000;
-    width: 25%;
-    display: flex;
-    justify-content: center;
-  }
-  .gallery img {
-    display: block;
-    margin-bottom: 10px;
-    width: 200px;
-    height: 200px;
-  }
-  .gallery img:last-child {
-    margin-bottom: 0;
-  }
-  .gallery {
-    min-height: 100vh;
-    max-height: 100vh;
-    overflow-y: scroll;
-  }
-  .right-side {
-    width: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-  }
-  .right-side {
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      position: relative;
-  }
+  display: flex;
+  min-height: 85vh;
+  max-height: 85vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+header {
+  min-height: 12vh;
+  max-height: 12vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
-  .right-side p {
-      cursor: move;
-  }
+.left-side {
+  background-color: #000;
+  width: 25%;
+  display: flex;
+  justify-content: center;
+}
+.gallery img {
+  display: block;
+  margin-bottom: 10px;
+  width: 200px;
+  height: 200px;
+}
+.gallery img:last-child {
+  margin-bottom: 0;
+}
+.gallery {
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+/* right side */
+.right-side {
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.right-side {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  position: relative;
+}
+#grab {
+  position: absolute;
+}
+#grab p {
+  cursor: move;
+}
