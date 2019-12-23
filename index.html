@@ -5,9 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <script type="text/javascript" src="./js/jquery.js"></script>
-    <script type="text/javascript" src="./js/jquery-ui-1.8.2.custom.min.js"></script>
-    <script type="text/javascript" src="./js/jquery.colorbox-min.js"></script>
   </head>
   <body>
     <header>
@@ -21,8 +18,13 @@
       </label>
       <label>
         Font size
-        <input type="range" name="points" min="16" id="font-size" placeholder="gekogkeo">
+        <input type="range" name="points" min="16" id="font-size">
         <span id="selectedSize">16</span>
+      </label>
+      <label>
+        Rotate text
+        <input type="range" name="points" min="-180" max="180" id="angle">
+        <span id="angle-value">0</span>
       </label>
       </nav>
     </header>
@@ -30,7 +32,7 @@
       <div class="left-side">
         <div class="gallery">
           <div class="test"></div>
-          <img src="./images/cat.png" alt="gallery image" />
+          <img src="./images/cat.png" alt="gallery image" id="some" />
           <img src="./images/change_my_mind.png" alt="gallery image" />
           <img src="./images/not_me.png" alt="gallery image" />
           <img src="./images/other.png" alt="gallery image" />
@@ -39,15 +41,16 @@
       </div>
       <div class="right-side">
           <div id="grab">
-            <p>Grab mess</p>
+            <p>Grab me and drag</p>
           </div>
       </div>
     </main>
-    <!-- <script
+    <script
     src="https://code.jquery.com/jquery-3.4.1.js"
     integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous">
-    </script> -->
+    </script>
+    <script src="./js/rotate.js"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>
