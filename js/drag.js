@@ -1,10 +1,8 @@
-dragElement(document.getElementById("grab"));
-
-function dragElement(elmnt) {
+function dragElement(elmnt, counter) {
   let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  if (document.querySelector('#grab p')) {
+  if (document.querySelector('.grab-' + counter + ' p')) {
     // if present, the header is where you move the DIV from:
-    document.querySelector('#grab p').onmousedown = dragMouseDown;
+    document.querySelector('.grab-' + counter + ' p').onmousedown = dragMouseDown;
   } else {
     // otherwise, move the DIV from anywhere inside the DIV:
     elmnt.onmousedown = dragMouseDown;

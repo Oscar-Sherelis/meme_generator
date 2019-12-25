@@ -14,7 +14,6 @@ header {
   box-sizing: border-box;
   overflow: hidden;
 }
-
 .left-side {
   background-color: #000;
   width: 25%;
@@ -42,17 +41,15 @@ header {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-}
-.right-side {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   position: relative;
 }
-#grab {
+.grab {
   position: absolute;
 }
-#grab p {
+.grab p {
   cursor: move;
   display: none;
   position: absolute;
