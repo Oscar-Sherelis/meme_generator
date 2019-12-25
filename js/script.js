@@ -1,40 +1,36 @@
-let firstP = document.createElement('p');
-firstP.innerHTML = "Hello";
-let paragraphArray = [];
-paragraphArray.push(firstP);
-
-// select image
-const enlargedImage = document.querySelector(".right-side");
 const images = document.querySelectorAll(".gallery img").forEach(image => {
   image.addEventListener("click", () => {
-    document.querySelector('.grab p').style.display = "block";
+    
+// select image
+const enlargedImage = document.querySelector(".right-side");
+enlargedImage.innerHTML = ''
+    let paragraphArray = [];
 
-    paragraphArray.forEach((pTag, index) => {
-      // make paragraph visible
-      pTag.style.display = 'block';
-      // to drag element
-      pTag.style.position = 'absolute'
-      let newGrab = document.createElement('div');
-      newGrab.setAttribute('class', 'grab-' + index);
-      newGrab.style.position = 'absolute';
-      newGrab.style.cursor = 'move'
-      newGrab.addEventListener('click', () => {
-        dragElement(document.querySelector('.grab-' + index), index)
-      })
-      newGrab.append(pTag);
-      enlargedImage.append(newGrab);
+    let firstP = document.createElement('p');
+    firstP.innerHTML = "Hello grab and drag me";
+    let counter = 0;
+          // make paragraph visible
+          firstP.style.display = 'block';
+          // to drag element
+          firstP.style.position = 'absolute';
+          let newGrab = document.createElement('div');
+          newGrab.setAttribute('class', 'grab-' + counter);
+          newGrab.style.position = 'absolute';
+          newGrab.style.cursor = 'move';
+          newGrab.append(firstP)
+
+    paragraphArray.push(newGrab);
+
+    paragraphArray.forEach((newGrabClass, counter) => {
+      enlargedImage.append(newGrabClass);
+      dragElement(document.querySelector('.grab-' + counter), counter);
     });
-    addImage(image);
-    dragElement(document.querySelector(".grab"));
+    showImage(image, enlargedImage);
   });
 });
 
-function selectPtoEdit (pElement) {
-  const idValue = pElement.getAttribute('data-id');
-}
-
 // enlarge image
-function addImage(clickedImage) {
+function showImage(clickedImage, imageLocation) {
 
     let selectedImage = clickedImage.src;
     let image = new Image();
@@ -43,7 +39,7 @@ function addImage(clickedImage) {
         let rootImage = image.src.split('/');
         let imgaLocation = './' + rootImage[8] + '/' + rootImage[9];
         // console.log(image.width)
-        enlargedImage.style.backgroundImage =  'url(' + imgaLocation + ')';
+        imageLocation.style.backgroundImage =  'url(' + imgaLocation + ')';
         // works
         // enlargedImage.style.width = 400;
     }
