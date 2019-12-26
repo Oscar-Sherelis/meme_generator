@@ -54,3 +54,7 @@ header {
   display: none;
   position: absolute;
 }
+
+.editable { 
+  border: 2px solid black;
+}

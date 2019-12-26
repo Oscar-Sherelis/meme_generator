@@ -51,8 +51,7 @@ enlargedImage.innerHTML = ''
 
           newGrabClass.classList.add('editable');
           clickCounter = counter;
-          console.log(newGrabClass)
-          selectElemenetToEdit('.editable', clickCounter);
+          selectElemenetToEdit('.editable');
         })
       })
     });

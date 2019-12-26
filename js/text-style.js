@@ -1,10 +1,9 @@
-function selectElemenetToEdit (selectedEl, pId) {
+function selectElemenetToEdit (selectedEl) {
+    // document.querySelector(selectedEl + ' p').style.border = "2px solid black";
 // select text color
 let selectColor = document.getElementById('color');
 selectColor.addEventListener('change', () => {
     document.querySelector(selectedEl + ' p').style.color = selectColor.value;
-    document.querySelector(selectedEl + ' p').style.border = "2px solid black";
-    console.log(document.querySelector(selectedEl))
 })
 // users inserted text
 const userText = document.getElementById('userText');
@@ -24,7 +23,7 @@ fontSize
 // rotation for now only one paragraph
 const angle = document.getElementById('angle');
 angle.addEventListener('change', () => {
-  $("p").eq(pId).rotate({angle: parseInt(angle.value)});
+  $(selectedEl).rotate({angle: parseInt(angle.value)});
   document.getElementById('angle-value').innerHTML = angle.value
 });
 
