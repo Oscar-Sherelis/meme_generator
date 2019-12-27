@@ -4,7 +4,7 @@ const images = document.querySelectorAll(".gallery img").forEach(image => {
 // select image
 const enlargedImage = document.querySelector(".right-side");
 enlargedImage.innerHTML = ''
-    let paragraphArray = [];
+    let textsToDragAndEdit = [];
 
     let firstP = document.createElement('p');
     firstP.innerHTML = "Hello grab and drag me";
@@ -29,59 +29,60 @@ enlargedImage.innerHTML = ''
     grabTwo.setAttribute('class', 'grab-1');
     grabTwo.style.position = 'absolute';
     grabTwo.style.cursor = 'move';
-    grabTwo.append(secondP)
+    grabTwo.append(secondP);
 
-    paragraphArray.push(newGrab);
-    paragraphArray.push(grabTwo)
+    textsToDragAndEdit.push(newGrab);
+    textsToDragAndEdit.push(grabTwo);
 
-    let countMe = 0;
-    let clickCounter = '';
-    let clickedEl = ''
-    paragraphArray.forEach((newGrabClass, counter) => {
-      enlargedImage.append(newGrabClass);
-      dragElement(document.querySelector('.grab-' + counter), counter);
-
-      // click on text
-      newGrabClass.addEventListener('click', () => {
-        // do not activate click, when dragging element
-        newGrabClass.addEventListener('click', () => {
-          paragraphArray.forEach(grabEl => {
-            grabEl.classList.remove('editable')
-          });
-
-          newGrabClass.classList.add('editable');
-          clickCounter = counter;
-          selectElemenetToEdit('.editable');
-        })
-      })
-    });
+    loadText(textsToDragAndEdit, enlargedImage);
     showImage(image, enlargedImage);
   });
 });
+
+function loadText (array, container) {
+  array.forEach((newGrabClass, counter) => {
+    container.append(newGrabClass);
+    dragElement(document.querySelector('.grab-' + counter), counter);
+
+    // click on text
+    newGrabClass.addEventListener('click', () => {
+      // do not activate click, when dragging element
+      newGrabClass.addEventListener('click', () => {
+        array.forEach(grabEl => {
+          grabEl.classList.remove('editable')
+        });
+
+        newGrabClass.classList.add('editable');
+        selectElemenetToEdit('.editable');
+      })
+    })
+  });
+}
+
 // enlarge image
 function showImage(clickedImage, imageLocation) {
-
+  // container width and height
+  let divWidth = imageLocation.offsetWidth;
+  let divHeight = imageLocation.offsetHeight;
+  
     let selectedImage = clickedImage.src;
     let image = new Image();
     image.src = selectedImage;
     image.onload = () => {
+        let imageOriginalWidth = image.naturalWidth;
+        let imageOriginalHeight = image.naturalHeight;
+
+        // finding proportion to scale image without loosing quality
+        let proportion = 0;
+        imageOriginalHeight > imageOriginalWidth
+        ? (proportion = Math.floor((imageOriginalHeight / imageOriginalWidth) * 10) / 10, divWidth = Math.floor(divHeight / proportion))
+        : (proportion = Math.floor((imageOriginalWidth / imageOriginalHeight) * 10) / 10, divHeight = Math.floor(divWidth / proportion))
+
         let rootImage = image.src.split('/');
         let imgaLocation = './' + rootImage[8] + '/' + rootImage[9];
-        // console.log(image.width)
+
         imageLocation.style.backgroundImage =  'url(' + imgaLocation + ')';
-        // works
-        // enlargedImage.style.width = 400;
+        imageLocation.style.width = divWidth;
+        imageLocation.style.height = divHeight;
     }
 }
-// upload image https://stackoverflow.com/questions/22087076/how-to-make-a-simple-image-upload-using-javascript-html
-// get element by attribute https://stackoverflow.com/questions/2694640/find-an-element-in-dom-based-on-an-attribute-value
-// DOM explaination https://programmingwithmosh.com/react/react-virtual-dom-explained/?utm_sq=g01x15bsp7&utm_source=Facebook&utm_medium=social&utm_campaign=ProgrammingwithMosh&utm_content=JavaScript&fbclid=IwAR0IcFKVi4XvsG1M7d3nCfbeGOUSsc2I23bfq5Cpge9Vf0Nl7l1kFQppZ_o
-// forEach object like array https://stackoverflow.com/questions/18804592/javascript-foreach-loop-on-associative-array-object/18804596
-// get by attribute https://stackoverflow.com/questions/5309926/how-to-get-the-data-id-attribute
-// keyUp https://stackoverflow.com/questions/3781142/jquery-or-javascript-how-determine-if-shift-key-being-pressed-while-clicking-an
-// design patterns https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented-ebook/dp/B000SEIBB8
-
-/**
- * Create p array
- * after press add 
- */

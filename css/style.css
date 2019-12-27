@@ -1,10 +1,13 @@
 nav {
   text-align: center;
 }
+header {
+  display: none;
+}
 main {
   display: flex;
-  min-height: 85vh;
-  max-height: 85vh;
+  min-height: 100vh;
+  max-height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -42,9 +45,11 @@ header {
   align-items: center;
   overflow: hidden;
   background-repeat: no-repeat;
-  background-position: center;
   background-size: contain;
   position: relative;
+  min-height: 100vh;
+  max-height: 100vh;
+  box-sizing: border-box;
 }
 .grab {
   position: absolute;
