@@ -1,10 +1,16 @@
 function selectElemenetToEdit (selectedEl) {
-    // document.querySelector(selectedEl + ' p').style.border = "2px solid black";
+
 // select text color
-let selectColor = document.getElementById('color');
-selectColor.addEventListener('change', () => {
-    document.querySelector(selectedEl + ' p').style.color = selectColor.value;
+let selectTextColor = document.getElementById('text-color');
+selectTextColor.addEventListener('change', () => {
+    document.querySelector(selectedEl + ' p').style.color = selectTextColor.value;
 })
+
+let selectTextBgColor = document.getElementById('text-bg-color');
+selectTextBgColor.addEventListener('change', () => {
+    document.querySelector(selectedEl + ' p').style.backgroundColor = selectTextBgColor.value;
+});
+
 // users inserted text
 const userText = document.getElementById('userText');
 userText

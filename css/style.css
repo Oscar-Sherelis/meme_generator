@@ -1,9 +1,7 @@
 nav {
   text-align: center;
 }
-header {
-  display: none;
-}
+header {}
 main {
   display: flex;
   min-height: 100vh;
