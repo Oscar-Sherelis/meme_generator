@@ -5,7 +5,6 @@ document.querySelectorAll(".gallery img").forEach(image => {
     const enlargedImage = document.querySelector(".right-side");
     enlargedImage.innerHTML = '';
     let textsToDragAndEdit = [];
-    createTextToolBox()
     let firstP = document.createElement('p');
     firstP.innerHTML = "Hello grab and drag me";
     let counter = 0;
@@ -104,10 +103,20 @@ function loadText (array, container) {
       // do not activate click, when dragging element
       newGrabClass.addEventListener('click', () => {
 
+        if(document.getElementById('tool-box')) {
+          if (document.getElementById('tool-box').style.display = 'block') {
+            document.getElementById('tool-box').style.display = 'none'
+          }
+          if (document.getElementById('tool-box').style.display = 'none') {
+            document.getElementById('tool-box').style.display = 'block'
+          }
+        } else {
+          createTextToolBox()
+        }
         // after click remove from all elements class 'editable'
         array.forEach(grabEl => {
           if(document.querySelector('.editable')) {
-            document.querySelector('.editable').style.border = 'none'
+            document.querySelector('.editable').style.border = 'none';
           }
           grabEl.classList.remove('editable');
         });
