@@ -6,6 +6,7 @@ label {
 }
 #tool {
   display: none;
+  position: absolute;
 }
 main {
   display: flex;
@@ -62,6 +63,6 @@ header {
   display: none;
 }
 
-.editable { 
+/* .editable { 
   border: 2px solid black;
-}
+} */

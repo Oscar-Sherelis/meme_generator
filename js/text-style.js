@@ -1,5 +1,4 @@
 function selectElemenetToEdit (selectedEl) {
-
 // select text color
 let selectTextColor = document.getElementById('text-color');
 selectTextColor.addEventListener('change', () => {
@@ -13,7 +12,7 @@ selectTextBgColor.addEventListener('change', () => {
 });
 
 // users inserted text
-const userText = document.getElementById('userText');
+const userText = document.getElementById('users-text');
 userText
 .addEventListener('change', () => {
     document.querySelector(selectedEl + ' p').innerHTML = userText.value;
@@ -24,7 +23,7 @@ const fontSize = document.getElementById('font-size');
 fontSize
 .addEventListener('change', () => {
     document.querySelector(selectedEl + ' p').style.fontSize = fontSize.value
-    document.getElementById('selectedSize').innerHTML = fontSize.value + 'px'
+    document.getElementById('selected-size').innerHTML = fontSize.value + 'px'
 });
 
 // rotation for now only one paragraph
@@ -33,4 +32,6 @@ angle.addEventListener('change', () => {
   $(selectedEl).rotate({angle: parseInt(angle.value)});
   document.getElementById('angle-value').innerHTML = angle.value
 });
+
+document.querySelector('.editable').style.border = '2px solid black'
 }
