@@ -1,6 +1,9 @@
-const images = document.querySelectorAll(".gallery img").forEach(image => {
+document.querySelectorAll(".gallery img").forEach(image => {
   image.addEventListener("click", () => {
  
+    document.getElementById('tool').style.display = 'block';
+    document.getElementById('tool').style.position = 'absolute';
+    dragElement(document.getElementById('tool'))
 // select image
 const enlargedImage = document.querySelector(".right-side");
 enlargedImage.innerHTML = ''
@@ -11,8 +14,6 @@ enlargedImage.innerHTML = ''
     let counter = 0;
     // make paragraph visible
     firstP.style.display = 'block';
-    // to drag element
-    firstP.style.position = 'absolute';
     let newGrab = document.createElement('div');
     newGrab.setAttribute('class', 'grab-' + counter);
     newGrab.style.position = 'absolute';
@@ -23,8 +24,6 @@ enlargedImage.innerHTML = ''
     secondP.innerHTML = "Hello grab and drag me";
     // make paragraph visible
     secondP.style.display = 'block';
-    // to drag element
-    secondP.style.position = 'absolute';
     let grabTwo = document.createElement('div');
     grabTwo.setAttribute('class', 'grab-1');
     grabTwo.style.position = 'absolute';
@@ -48,10 +47,11 @@ function loadText (array, container) {
     newGrabClass.addEventListener('click', () => {
       // do not activate click, when dragging element
       newGrabClass.addEventListener('click', () => {
+        // after click remove from all elements class 'editable'
         array.forEach(grabEl => {
           grabEl.classList.remove('editable')
         });
-
+        // add class 'editable only for one element'
         newGrabClass.classList.add('editable');
         selectElemenetToEdit('.editable');
       })

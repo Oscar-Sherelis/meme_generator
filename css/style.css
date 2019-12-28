@@ -1,7 +1,12 @@
 nav {
   text-align: center;
 }
-/* header {} */
+label {
+  display: block;
+}
+#tool {
+  display: none;
+}
 main {
   display: flex;
   min-height: 100vh;
@@ -55,7 +60,6 @@ header {
 .grab p {
   cursor: move;
   display: none;
-  position: absolute;
 }
 
 .editable { 
