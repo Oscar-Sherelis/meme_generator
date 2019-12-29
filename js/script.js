@@ -188,7 +188,6 @@ function showImage(clickedImage, imageLocation) {
     let selectedImage = clickedImage.src;
     let image = new Image();
     image.src = selectedImage;
-    console.log(image.src)
     image.onload = () => {
         let imageOriginalWidth = image.naturalWidth;
         let imageOriginalHeight = image.naturalHeight;
@@ -200,7 +199,7 @@ function showImage(clickedImage, imageLocation) {
         : (proportion = Math.floor((imageOriginalWidth / imageOriginalHeight) * 10) / 10, divHeight = Math.floor(divWidth / proportion));
 
         let rootImage = image.src.split('/');
-        let imgaLocation = './' + rootImage[8] + '/' + rootImage[9];
+        let imgaLocation = './images/' + rootImage[rootImage.length - 1];
 
         imageLocation.style.backgroundImage =  'url(' + imgaLocation + ')';
         imageLocation.style.width = divWidth;
