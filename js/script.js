@@ -1,10 +1,12 @@
+let textsToDragAndEdit = [];
+const enlargedImage = document.querySelector(".right-side");
+
 document.querySelectorAll(".gallery img").forEach(image => {
   image.addEventListener("click", () => {
 
     // select image
-    const enlargedImage = document.querySelector(".right-side");
     enlargedImage.innerHTML = '';
-    let textsToDragAndEdit = [];
+    textsToDragAndEdit = [];
     let firstP = document.createElement('p');
     firstP.innerHTML = "Hello grab and drag me";
     let counter = 0;
@@ -62,12 +64,21 @@ function createTextToolBox () {
   angleValue.setAttribute('id', 'angle-value');
   rotateTextLabel.append(angleValue);
 
-  tools.append(textColorLabel, textBgColorLabel, usersTextLabel, fontSizeLabel, rotateTextLabel);
+  let closeButton = document.createElement('button');
+  closeButton.append('close');
+
+  let deleteElButton = document.createElement('button');
+  deleteElButton.append('delete');
+
+  let addNewTextButton = document.createElement('button');
+  addNewTextButton.append('Add new text');
+
+  tools.append(textColorLabel, textBgColorLabel, usersTextLabel, fontSizeLabel, rotateTextLabel, closeButton, addNewTextButton, deleteElButton);
   toolBox.append(tools);
 
   const enlargedImage = document.querySelector(".right-side");
-  enlargedImage.append(toolBox)
-  dragElement(toolBox)
+  enlargedImage.append(toolBox);
+  dragElement(toolBox);
 
   // do not allow font-size = 0
   document.getElementById('font-size').setAttribute('min', 12);
@@ -76,6 +87,44 @@ function createTextToolBox () {
   angle.setAttribute('min', -180);
   angle.setAttribute('max', 180);
 
+  // buttons: close, delete, add
+  closeButton.addEventListener('click', () => {
+    document.getElementById('tool-box').style.display = 'none';
+    document.querySelector('.editable').style.border = 'none';
+  });
+
+  deleteElButton.addEventListener('click', () => {
+
+    let selectedEl = document.querySelector('.editable')
+    let selectedIndex = parseInt(selectedEl.getAttribute("class").split(' ')[0].split('-')[1])
+    textsToDragAndEdit.splice(selectedIndex, 1);
+    document.querySelector('.grab-' + selectedIndex).remove()
+    
+    loadText(textsToDragAndEdit, enlargedImage);
+  });
+
+  addNewTextButton.addEventListener('click', () => {
+    let checkIndex = 0;
+    textsToDragAndEdit.forEach((grabEl, index) => {
+      if (checkIndex === index) {
+        checkIndex++
+      }
+    });
+
+    let newP = document.createElement('p');
+    newP.innerHTML = "Hello grab and drag me";
+
+    // make paragraph visible
+    newP.style.display = 'block';
+    let newGrab = document.createElement('div');
+    newGrab.setAttribute('class', 'grab-' + checkIndex);
+    newGrab.style.position = 'absolute';
+    newGrab.style.cursor = 'move';
+    newGrab.append(newP);
+
+    textsToDragAndEdit[checkIndex] = newGrab;
+    loadText(textsToDragAndEdit, enlargedImage);
+  });
 }
 
 // creates label with input to edit text
@@ -139,6 +188,7 @@ function showImage(clickedImage, imageLocation) {
     let selectedImage = clickedImage.src;
     let image = new Image();
     image.src = selectedImage;
+    console.log(image.src)
     image.onload = () => {
         let imageOriginalWidth = image.naturalWidth;
         let imageOriginalHeight = image.naturalHeight;
