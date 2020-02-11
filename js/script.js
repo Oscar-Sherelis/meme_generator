@@ -1,8 +1,6 @@
 let textsToDragAndEdit = [];
 const enlargedImage = document.querySelector(".right-side");
 
-const callExport = require('./experment')
-callExport.callMe();
 document.querySelectorAll(".gallery img").forEach(image => {
   image.addEventListener("click", () => {
 
