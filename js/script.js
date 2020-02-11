@@ -1,6 +1,8 @@
 let textsToDragAndEdit = [];
 const enlargedImage = document.querySelector(".right-side");
 
+const callExport = require('./experment')
+callExport.callMe();
 document.querySelectorAll(".gallery img").forEach(image => {
   image.addEventListener("click", () => {
 
@@ -150,7 +152,7 @@ function loadText (array, container) {
     newGrabClass.addEventListener('click', () => {
 
       // do not activate click, when dragging element
-      newGrabClass.addEventListener('click', () => {
+      newGrabClass.addEventListener('dblclick', () => {
 
         if(document.getElementById('tool-box')) {
           if (document.getElementById('tool-box').style.display = 'block') {
