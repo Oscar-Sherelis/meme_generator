@@ -87,7 +87,7 @@ function createTextToolBox () {
   angle.setAttribute('min', -180);
   angle.setAttribute('max', 180);
 
-  // buttons: close, delete, add
+  // buttons in toolbox: close, delete, add
   closeButton.addEventListener('click', () => {
     document.getElementById('tool-box').style.display = 'none';
     document.querySelector('.editable').style.border = 'none';
@@ -95,22 +95,26 @@ function createTextToolBox () {
 
   deleteElButton.addEventListener('click', () => {
 
-    let selectedEl = document.querySelector('.editable')
-    let selectedIndex = parseInt(selectedEl.getAttribute("class").split(' ')[0].split('-')[1])
-    textsToDragAndEdit.splice(selectedIndex, 1);
-    document.querySelector('.grab-' + selectedIndex).remove()
-    
-    loadText(textsToDragAndEdit, enlargedImage);
+    let selectedEl = document.querySelector('.editable');
+    let selectedIndex = parseInt(selectedEl.getAttribute("class").split(' ')[0].split('-')[1]);
+
+    if (textsToDragAndEdit.length > 1) {
+      textsToDragAndEdit.splice(selectedIndex, 1);
+      document.querySelector('.grab-' + selectedIndex).remove();
+      loadText(textsToDragAndEdit, enlargedImage);
+    } else {
+      alert('Cannot delete last text field');
+    }
   });
 
   addNewTextButton.addEventListener('click', () => {
     let checkIndex = 0;
     textsToDragAndEdit.forEach((grabEl, index) => {
       if (checkIndex === index) {
-        checkIndex++
+        checkIndex++;
       }
     });
-
+    // ======== end of buttons in toolbox ============
     let newP = document.createElement('p');
     newP.innerHTML = "Hello grab and drag me";
 
