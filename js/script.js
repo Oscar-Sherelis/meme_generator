@@ -78,8 +78,9 @@ function createTextToolBox () {
 
   const enlargedImage = document.querySelector(".right-side");
   enlargedImage.append(toolBox);
-  dragElement(toolBox);
 
+  $('#tool-box').draggable();
+  
   // do not allow font-size = 0
   document.getElementById('font-size').setAttribute('min', 12);
 
@@ -110,7 +111,7 @@ function createTextToolBox () {
   addNewTextButton.addEventListener('click', () => {
     let checkIndex = 0;
     textsToDragAndEdit.forEach((grabEl, index) => {
-      if (checkIndex === index) {
+      while (checkIndex === index) {
         checkIndex++;
       }
     });
@@ -148,7 +149,7 @@ function createTool (textForLabel, inputType, inputId) {
 function loadText (array, container) {
   array.forEach((newGrabClass, counter) => {
     container.append(newGrabClass);
-    dragElement(document.querySelector('.grab-' + counter), counter);
+    $('.grab-' + counter).draggable();
 
     // click on text
     newGrabClass.addEventListener('click', () => {

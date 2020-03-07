@@ -30,8 +30,12 @@ header {
 .gallery img {
   display: block;
   margin-bottom: 10px;
-  width: 200px;
-  height: 200px;
+  min-width: 24%;
+  min-height: 24%;
+  max-width: 90%;
+  max-height: 90%;
+  margin-right: auto;
+  margin-left: auto;
 }
 .gallery img:last-child {
   margin-bottom: 0;
