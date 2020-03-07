@@ -189,9 +189,8 @@ function showImage(clickedImage, imageLocation) {
   let divWidth = imageLocation.offsetWidth;
   let divHeight = imageLocation.offsetHeight;
   
-    let selectedImage = clickedImage.src;
     let image = new Image();
-    image.src = selectedImage;
+    image.src = clickedImage.src;
     image.onload = () => {
         let imageOriginalWidth = image.naturalWidth;
         let imageOriginalHeight = image.naturalHeight;
