@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 nav {
   text-align: center;
 }
@@ -8,12 +11,47 @@ label {
   display: none;
   position: absolute;
 }
-main {
+/* instruction start */
+.exit-instruction {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 30px;
+}
+.exit-instruction:hover {
+  cursor: pointer;
+}
+.instruction-section {
+  position: relative;
   display: flex;
   min-height: 100vh;
   max-height: 100vh;
-  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  background-color: #33bd58;
+  color: #fff;
+}
+.instruction h2 {
+  font-size: 32px;
+  font-weight: bold;
+  padding: 15px 0;
+}
+ol {
+  list-style-type: decimal;
+}
+li {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+li:last-child {
+  margin-bottom: 0;
+}
+/* end of instruction */
+main {
+  min-height: 100vh;
+  max-height: 100vh;
   overflow: hidden;
+  display: none;
 }
 header {
   min-height: 12vh;
@@ -44,6 +82,13 @@ header {
   min-height: 100vh;
   max-height: 100vh;
   overflow-y: scroll;
+}
+.manual {
+  width: 40px;
+  height: 40px;
+}
+.manual:hover {
+  cursor: pointer;
 }
 /* right side */
 .right-side {

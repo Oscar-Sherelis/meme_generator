@@ -2,40 +2,42 @@ let textsToDragAndEdit = [];
 const enlargedImage = document.querySelector(".right-side");
 
 document.querySelectorAll(".gallery img").forEach(image => {
-  image.addEventListener("click", () => {
+  if (image.classList.value !== 'manual') {
+    image.addEventListener("click", () => {
 
-    // select image
-    enlargedImage.innerHTML = '';
-    textsToDragAndEdit = [];
-    let firstP = document.createElement('p');
-    firstP.innerHTML = "Hello grab and drag me";
-    let counter = 0;
+      // select image
+      enlargedImage.innerHTML = '';
+      textsToDragAndEdit = [];
+      let firstP = document.createElement('p');
+      firstP.innerHTML = "Hello grab and drag me";
+      let counter = 0;
 
-    // make paragraph visible
-    firstP.style.display = 'block';
-    let newGrab = document.createElement('div');
-    newGrab.setAttribute('class', 'grab-' + counter);
-    newGrab.style.position = 'absolute';
-    newGrab.style.cursor = 'move';
-    newGrab.append(firstP);
+      // make paragraph visible
+      firstP.style.display = 'block';
+      let newGrab = document.createElement('div');
+      newGrab.setAttribute('class', 'grab-' + counter);
+      newGrab.style.position = 'absolute';
+      newGrab.style.cursor = 'move';
+      newGrab.append(firstP);
 
-    let secondP = document.createElement('p');
-    secondP.innerHTML = "Hello grab and drag me";
+      let secondP = document.createElement('p');
+      secondP.innerHTML = "Hello grab and drag me";
 
-    // make paragraph visible
-    secondP.style.display = 'block';
-    let grabTwo = document.createElement('div');
-    grabTwo.setAttribute('class', 'grab-1');
-    grabTwo.style.position = 'absolute';
-    grabTwo.style.cursor = 'move';
-    grabTwo.append(secondP);
+      // make paragraph visible
+      secondP.style.display = 'block';
+      let grabTwo = document.createElement('div');
+      grabTwo.setAttribute('class', 'grab-1');
+      grabTwo.style.position = 'absolute';
+      grabTwo.style.cursor = 'move';
+      grabTwo.append(secondP);
 
-    textsToDragAndEdit.push(newGrab);
-    textsToDragAndEdit.push(grabTwo);
+      textsToDragAndEdit.push(newGrab);
+      textsToDragAndEdit.push(grabTwo);
 
-    loadText(textsToDragAndEdit, enlargedImage);
-    showImage(image, enlargedImage);
-  });
+      loadText(textsToDragAndEdit, enlargedImage);
+      showImage(image, enlargedImage);
+    });
+  }
 });
 
 function createTextToolBox () {
@@ -79,7 +81,9 @@ function createTextToolBox () {
   const enlargedImage = document.querySelector(".right-side");
   enlargedImage.append(toolBox);
 
-  $('#tool-box').draggable();
+  $('#tool-box').draggable({
+    containment: "parent"
+  });
   
   // do not allow font-size = 0
   document.getElementById('font-size').setAttribute('min', 12);
@@ -149,7 +153,9 @@ function createTool (textForLabel, inputType, inputId) {
 function loadText (array, container) {
   array.forEach((newGrabClass, counter) => {
     container.append(newGrabClass);
-    $('.grab-' + counter).draggable();
+    $('.grab-' + counter).draggable({
+      containment: "parent"
+    });
 
     // click on text
     newGrabClass.addEventListener('click', () => {
@@ -210,3 +216,17 @@ function showImage(clickedImage, imageLocation) {
         imageLocation.style.height = divHeight;
     }
 }
+
+// instruction button event
+
+document.querySelector('.exit-instruction')
+.addEventListener('click', () => {
+  document.querySelector('.instruction-section').style.display = 'none';
+  document.querySelector('main').style.display = 'flex';
+
+})
+document.querySelector('.manual')
+.addEventListener('click', () => {
+  document.querySelector('.instruction-section').style.display = 'flex';
+  document.querySelector('main').style.display = 'none';
+})
