@@ -1,45 +1,93 @@
-let textsToDragAndEdit = [];
-const enlargedImage = document.querySelector(".right-side");
+// Canvas
+let enlargedImage = document.querySelector(".right-side");
+enlargedImage.height = 0;
+enlargedImage.width = 0;
+let ctx = enlargedImage.getContext('2d')
+let imageToDraw = new Image();
+
+// Default settings for text style
+let textSettings = {
+  firstText: {
+    text: `First text to
+    edit`,
+    textX: enlargedImage.width / 2, 
+    textY: enlargedImage.height / 2, 
+    textFontSize: 30, 
+    textColor: 'orange'
+  },
+  secondText: {
+    text: 'Second text to edit',
+    textX: enlargedImage.width / 2, 
+    textY: enlargedImage.height / 2, 
+    textFontSize: 30, 
+    textColor: 'orange'
+  }
+}
+
+// Saving image function
+function screenshot () {
+  enlargedImage.toBlob(function (blob) {
+    saveAs(blob, 'image.png')
+  })
+}
 
 document.querySelectorAll(".gallery img").forEach(image => {
   if (image.classList.value !== 'manual') {
     image.addEventListener("click", () => {
 
-      // select image
-      enlargedImage.innerHTML = '';
-      textsToDragAndEdit = [];
-      let firstP = document.createElement('p');
-      firstP.innerHTML = "Hello grab and drag me";
-      let counter = 0;
-
-      // make paragraph visible
-      firstP.style.display = 'block';
-      let newGrab = document.createElement('div');
-      newGrab.setAttribute('class', 'grab-' + counter);
-      newGrab.style.position = 'absolute';
-      newGrab.style.cursor = 'move';
-      newGrab.append(firstP);
-
-      let secondP = document.createElement('p');
-      secondP.innerHTML = "Hello grab and drag me";
-
-      // make paragraph visible
-      secondP.style.display = 'block';
-      let grabTwo = document.createElement('div');
-      grabTwo.setAttribute('class', 'grab-1');
-      grabTwo.style.position = 'absolute';
-      grabTwo.style.cursor = 'move';
-      grabTwo.append(secondP);
-
-      textsToDragAndEdit.push(newGrab);
-      textsToDragAndEdit.push(grabTwo);
-
-      loadText(textsToDragAndEdit, enlargedImage);
-      showImage(image, enlargedImage);
+      addToolBox();
+      showImage(image, textSettings);
     });
   }
 });
 
+function imageDraw () {
+  // without second line not works
+  imageToDraw.src = imageToDraw.src
+  imageToDraw.onload = () => {
+
+    enlargedImage.width = imageToDraw.width;
+    enlargedImage.height = imageToDraw.height;
+
+  ctx.drawImage(imageToDraw, 0, 0);
+
+  let selectedText = document.querySelector('select');
+  console.log(selectedText.value)
+  ctx.font = textSettings[selectedText.value].textFontSize + 'px Impact';
+  ctx.fillStyle = textSettings[selectedText.value].textColor;
+  ctx.strokeStyle = 'white'
+  ctx.lineWidth = 30;
+  ctx.fillText(
+    textSettings[selectedText.value].text, 
+    textSettings[selectedText.value].textX, 
+    textSettings[selectedText.value].textY 
+  )
+
+    Object.keys(textSettings).forEach(key => {
+      if (selectedText.value !== key) {
+        ctx.font = textSettings[key].textFontSize + 'px Impact';
+        ctx.fillStyle = textSettings[key].textColor;
+        ctx.strokeStyle = 'white'
+        ctx.lineWidth = 30;
+        ctx.fillText(textSettings[key].text, textSettings[key].textX, textSettings[key].textY )
+      }
+    })
+  }
+}
+
+function textEditEvents (textChangeEl, textSettingToChange) {
+  // take selected text from option select input
+  if (textChangeEl !== 'undefined' && textChangeEl !== null) {
+    textChangeEl.addEventListener('input', () => {
+      let selectedText = document.querySelector('select')
+      textSettings[selectedText.value][textSettingToChange] = textChangeEl.value;
+      console.log(textSettings['textColor'])
+      imageDraw();
+    })
+  }
+}
+
+// ToolBox creating
 function createTextToolBox () {
   let toolBox = document.createElement('div');
   toolBox.setAttribute('id', 'tool-box');
@@ -53,33 +101,43 @@ function createTextToolBox () {
   tools.setAttribute('class', 'tools');
 
   const textColorLabel = createTool('Select text color ', 'color', 'text-color');
-  const textBgColorLabel = createTool('Select text background color ', 'color', 'text-bg-color');
-  const usersTextLabel = createTool('Enter text and press enter ', 'text', 'users-text');
+  const usersTextLabel = createTool('Enter text and press ', 'text', 'users-text');
 
   const fontSizeLabel = createTool('Font size ', 'range', 'font-size');
   let fontSizeValue = document.createElement('span');
   fontSizeValue.setAttribute('id', 'selected-size');
   fontSizeLabel.append(fontSizeValue);
 
-  const rotateTextLabel = createTool('Rotate text', 'range', 'angle')
-  let angleValue = document.createElement('span');
-  angleValue.setAttribute('id', 'angle-value');
-  rotateTextLabel.append(angleValue);
+  const textXLabel = createTool('Text x position', 'range', 'text_x');
+  let textXValue = document.createElement('span');
+  textXValue.setAttribute('id', 'text_x-value');
+  textXLabel.append(textXValue);
+
+  const textYLabel = createTool('Text y position', 'range', 'text_y');
+  let textYValue = document.createElement('span');
+  textYValue.setAttribute('id', 'text_y-value');
+  textYLabel.append(textYValue);
 
   let closeButton = document.createElement('button');
   closeButton.append('close');
 
-  let deleteElButton = document.createElement('button');
-  deleteElButton.append('delete');
+  let select = document.createElement('select');
 
-  let addNewTextButton = document.createElement('button');
-  addNewTextButton.append('Add new text');
+  let firstOption = document.createElement('option');
+  firstOption.value = 'firstText';
+  firstOption.text = 'First text';
+  firstOption.selected = 'selected';
 
-  tools.append(textColorLabel, textBgColorLabel, usersTextLabel, fontSizeLabel, rotateTextLabel, closeButton, addNewTextButton, deleteElButton);
+  let secondOption = document.createElement('option');
+  secondOption.value = 'secondText';
+  secondOption.text = 'Second text';
+
+  select.append(firstOption, secondOption);
+  tools.append(textColorLabel, usersTextLabel, fontSizeLabel, textXLabel, textYLabel, select, closeButton);
   toolBox.append(tools);
 
-  const enlargedImage = document.querySelector(".right-side");
-  enlargedImage.append(toolBox);
+let menu = document.querySelector("main");
+  menu.append(toolBox);
 
   $('#tool-box').draggable({
     containment: "parent"
@@ -88,52 +146,25 @@ function createTextToolBox () {
   // do not allow font-size = 0
   document.getElementById('font-size').setAttribute('min', 12);
 
-  let angle = document.getElementById('angle');
-  angle.setAttribute('min', -180);
-  angle.setAttribute('max', 180);
+  let selected = document.querySelector('select')
+  let text_x = document.getElementById('text_x');
+  text_x.setAttribute('min', 0);
+  text_x.setAttribute('max', imageToDraw.width - (textSettings[selected.value]['textFontSize'] * 2));
+
+  let text_y = document.getElementById('text_y');
+  text_y.setAttribute('min', textSettings[selected.value]['textFontSize']);
+  text_y.setAttribute('max', imageToDraw.height - (textSettings[selected.value]['textFontSize']));
 
   // buttons in toolbox: close, delete, add
   closeButton.addEventListener('click', () => {
     document.getElementById('tool-box').style.display = 'none';
-    document.querySelector('.editable').style.border = 'none';
   });
 
-  deleteElButton.addEventListener('click', () => {
-
-    let selectedEl = document.querySelector('.editable');
-    let selectedIndex = parseInt(selectedEl.getAttribute("class").split(' ')[0].split('-')[1]);
-
-    if (textsToDragAndEdit.length > 1) {
-      textsToDragAndEdit.splice(selectedIndex, 1);
-      document.querySelector('.grab-' + selectedIndex).remove();
-      loadText(textsToDragAndEdit, enlargedImage);
-    } else {
-      alert('Cannot delete last text field');
-    }
-  });
-
-  addNewTextButton.addEventListener('click', () => {
-    let checkIndex = 0;
-    textsToDragAndEdit.forEach((grabEl, index) => {
-      while (checkIndex === index) {
-        checkIndex++;
-      }
-    });
-    // ======== end of buttons in toolbox ============
-    let newP = document.createElement('p');
-    newP.innerHTML = "Hello grab and drag me";
-
-    // make paragraph visible
-    newP.style.display = 'block';
-    let newGrab = document.createElement('div');
-    newGrab.setAttribute('class', 'grab-' + checkIndex);
-    newGrab.style.position = 'absolute';
-    newGrab.style.cursor = 'move';
-    newGrab.append(newP);
-
-    textsToDragAndEdit[checkIndex] = newGrab;
-    loadText(textsToDragAndEdit, enlargedImage);
-  });
+  textEditEvents(document.getElementById('text-color'), 'textColor');
+  textEditEvents(document.getElementById('users-text'), 'text');
+  textEditEvents(document.getElementById('font-size'), 'textFontSize');
+  textEditEvents(document.getElementById('text_x'), 'textX');
+  textEditEvents(document.getElementById('text_y'), 'textY');
 }
 
 // creates label with input to edit text
@@ -150,18 +181,10 @@ function createTool (textForLabel, inputType, inputId) {
   return label
 }
 
-function loadText (array, container) {
-  array.forEach((newGrabClass, counter) => {
-    container.append(newGrabClass);
-    $('.grab-' + counter).draggable({
-      containment: "parent"
-    });
+function addToolBox () {
 
-    // click on text
-    newGrabClass.addEventListener('click', () => {
-
-      // do not activate click, when dragging element
-      newGrabClass.addEventListener('dblclick', () => {
+      document.querySelector('.tools')
+        .addEventListener('click', () => {
 
         if(document.getElementById('tool-box')) {
           if (document.getElementById('tool-box').style.display = 'block') {
@@ -173,60 +196,46 @@ function loadText (array, container) {
         } else {
           createTextToolBox()
         }
-        // after click remove from all elements class 'editable'
-        array.forEach(grabEl => {
-          if(document.querySelector('.editable')) {
-            document.querySelector('.editable').style.border = 'none';
-          }
-          grabEl.classList.remove('editable');
-        });
-
-        // add class 'editable only for one element'
-        newGrabClass.classList.add('editable');
-        selectElemenetToEdit('.editable');
       });
-    });
-  });
 }
 
-// enlarge image
-function showImage(clickedImage, imageLocation) {
+// function, what draws image and text
+function showImage(clickedImageSrc, textSettings) {
+    imageToDraw.src = clickedImageSrc.src;
+    imageToDraw.onload = () => {
+        enlargedImage.width = imageToDraw.width;
+        enlargedImage.height = imageToDraw.height;
 
-  // container width and height
-  let divWidth = imageLocation.offsetWidth;
-  let divHeight = imageLocation.offsetHeight;
-  
-    let image = new Image();
-    image.src = clickedImage.src;
-    image.onload = () => {
-        let imageOriginalWidth = image.naturalWidth;
-        let imageOriginalHeight = image.naturalHeight;
+        // Default text position parameters
+      textSettings.firstText.textX = enlargedImage.width / 2;
+      textSettings.firstText.textY = enlargedImage.height / 2;
 
-        // finding proportion to scale image without losing quality
-        let proportion = 0;
-        imageOriginalHeight > imageOriginalWidth
-        ? (proportion = Math.floor((imageOriginalHeight / imageOriginalWidth) * 10) / 10, divWidth = Math.floor(divHeight / proportion))
-        : (proportion = Math.floor((imageOriginalWidth / imageOriginalHeight) * 10) / 10, divHeight = Math.floor(divWidth / proportion));
+      textSettings.secondText.textX = (enlargedImage.width / 2) + 50;
+      textSettings.secondText.textY = (enlargedImage.height / 2) + 50;
 
-        let rootImage = image.src.split('/');
-        let imgaLocation = './images/' + rootImage[rootImage.length - 1];
+      ctx.drawImage(imageToDraw, 0, 0)
 
-        imageLocation.style.backgroundImage =  'url(' + imgaLocation + ')';
-        imageLocation.style.width = divWidth;
-        imageLocation.style.height = divHeight;
+      Object.keys(textSettings).forEach(function (keyValue) {
+        ctx.font = textSettings[keyValue].textFontSize + 'px Impact';
+        ctx.fillStyle = textSettings[keyValue].textColor;
+        ctx.strokeStyle = 'white'
+        ctx.lineWidth = 30;
+        ctx.fillText(textSettings[keyValue].text, textSettings[keyValue].textX, textSettings[keyValue].textY )
+        })
     }
+
+    document.querySelector('.buttons').style.display = 'block';
 }
 
 // instruction button event
-
 document.querySelector('.exit-instruction')
 .addEventListener('click', () => {
   document.querySelector('.instruction-section').style.display = 'none';
-  document.querySelector('main').style.display = 'flex';
+  document.querySelector('.content').style.display = 'block';
 
 })
 document.querySelector('.manual')
 .addEventListener('click', () => {
   document.querySelector('.instruction-section').style.display = 'flex';
-  document.querySelector('main').style.display = 'none';
+  document.querySelector('.content').style.display = 'none';
 })

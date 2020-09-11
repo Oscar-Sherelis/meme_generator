@@ -47,11 +47,14 @@ li:last-child {
   margin-bottom: 0;
 }
 /* end of instruction */
-main {
+.content {
+  display: none;
   min-height: 100vh;
   max-height: 100vh;
   overflow: hidden;
-  display: none;
+}
+main {
+  display: flex;
 }
 header {
   min-height: 12vh;
@@ -104,14 +107,45 @@ header {
   max-height: 100vh;
   box-sizing: border-box;
 }
-.grab {
-  position: absolute;
+/* toolBox */
+#tool-box {
+  font-size: 24px;
+  border: 1px solid silver;
+  border-radius: 15px;
 }
-.grab p {
-  cursor: move;
+label {
+  margin-bottom: 10px;
+}
+input[type="text"],
+select {
+  display: block;
+  min-height: 30px;
+}
+input[type="range"],
+input[type="text"] {
+  display: block;
+  min-width: 100%;
+}
+select {
+  margin-bottom: 10px;
+}
+.buttons {
   display: none;
 }
-
-/* .editable { 
-  border: 2px solid black;
-} */
+.buttons button {
+  background-color: transparent;
+  border: none;
+}
+.buttons button:hover {
+  cursor: pointer;
+}
+.buttons img {
+  width: 50px;
+  height: 50px;
+}
+.tools button {
+  padding: 10px;
+  color: #fff;
+  background-color: rgb(266, 26, 26);
+  border: none;
+}

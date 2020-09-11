@@ -11,6 +11,15 @@
     <title>Oscar Sherelis meme generator</title>
   </head>
   <body>
+  <section class="content">
+    <div class="buttons">
+      <button onclick="screenshot()">
+        <img src="./images/save.svg" alt="Save" title="Save image">
+      </button>
+      <button class="tools">
+        <img src="./images/tools.svg" alt="Tools" title="Toolsy">
+      </button>
+    </div>
     <main>
       <div class="left-side">
         <div class="gallery">
@@ -23,27 +32,24 @@
           <img src="./images/better.png" alt="gallery image" />
         </div>
       </div>
-      <div class="right-side">
-      </div>
+      <canvas class="right-side">
+      </canvas>
     </main>
+  </section>
     <section class="instruction-section">
       <span class="exit-instruction">X</span>
       <div class="instruction">
         <h2>Instruction</h2>
         <ol>
           <li>Click on image from the left side</li>
-          <li>From the right side in center find text "Hello grab and drag me"</li>
-          <li>Drag text to change text position</li>
-          <li>Double click on text to edit</li>
+          <li>After image with text will appear in the right side</li>
+          <li>To edit text click on "Open tools" button</li>
         </ol>
       </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
-    <script src="./js/jquery.ui.touch-punch.min.js"></script>
-    <script src="./js/rotate.js"></script>
-    <script src="./js/text-style.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
     <script src="./js/script.js"></script>
   </body>
 </html>
