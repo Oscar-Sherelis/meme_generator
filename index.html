@@ -17,8 +17,15 @@
         <img src="./images/save.svg" alt="Save" title="Save image">
       </button>
       <button class="tools">
-        <img src="./images/tools.svg" alt="Tools" title="Toolsy">
+        <img src="./images/tools.svg" alt="Tools" title="Tools">
       </button>
+      <div class="image-upload">
+        <label for="file-input">
+          <img src="./images/upload-image.svg"/>
+        </label>
+      
+        <input id="file-input" type="file" accept="image/*"/>
+      </div>
     </div>
     <main>
       <div class="left-side">
@@ -48,7 +55,11 @@
       </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="https://code.jquery.com/jquery-1.7.2.min.js"></script>
     <script src="https://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js" 
+      integrity="sha512-0bEtK0USNd96MnO4XhH8jhv3nyRF0eK87pJke6pkYf3cM0uDIhNJy9ltuzqgypoIFXw3JSuiy04tVk4AjpZdZw==" 
+      crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
     <script src="./js/script.js"></script>
   </body>

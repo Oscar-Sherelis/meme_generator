@@ -131,6 +131,8 @@ select {
 }
 .buttons {
   display: none;
+  width: 25%;
+  justify-content: space-between;
 }
 .buttons button {
   background-color: transparent;
@@ -142,6 +144,9 @@ select {
 .buttons img {
   width: 50px;
   height: 50px;
+}
+.image-upload>input {
+  display: none;
 }
 .tools button {
   padding: 10px;

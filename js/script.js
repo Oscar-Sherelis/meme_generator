@@ -8,8 +8,7 @@ let imageToDraw = new Image();
 // Default settings for text style
 let textSettings = {
   firstText: {
-    text: `First text to
-    edit`,
+    text: 'First text to edit',
     textX: enlargedImage.width / 2, 
     textY: enlargedImage.height / 2, 
     textFontSize: 30, 
@@ -41,6 +40,18 @@ document.querySelectorAll(".gallery img").forEach(image => {
   }
 });
 
+document.querySelector('#file-input')
+.addEventListener('change', () => {
+  let reader = new FileReader();
+  reader.onload = () => {
+    enlargedImage.width = imageToDraw.width;
+    enlargedImage.height = imageToDraw.height;
+
+    imageToDraw.src = reader.result;
+    ctx.drawImage(imageToDraw, 0, 0);
+  }
+  reader.readAsDataURL(document.querySelector('#file-input').files[0])
+})
 function imageDraw () {
   // without second line not works
   imageToDraw.src = imageToDraw.src
@@ -52,7 +63,6 @@ function imageDraw () {
   ctx.drawImage(imageToDraw, 0, 0);
 
   let selectedText = document.querySelector('select');
-  console.log(selectedText.value)
   ctx.font = textSettings[selectedText.value].textFontSize + 'px Impact';
   ctx.fillStyle = textSettings[selectedText.value].textColor;
   ctx.strokeStyle = 'white'
@@ -81,7 +91,6 @@ function textEditEvents (textChangeEl, textSettingToChange) {
     textChangeEl.addEventListener('input', () => {
       let selectedText = document.querySelector('select')
       textSettings[selectedText.value][textSettingToChange] = textChangeEl.value;
-      console.log(textSettings['textColor'])
       imageDraw();
     })
   }
@@ -101,7 +110,7 @@ function createTextToolBox () {
   tools.setAttribute('class', 'tools');
 
   const textColorLabel = createTool('Select text color ', 'color', 'text-color');
-  const usersTextLabel = createTool('Enter text and press ', 'text', 'users-text');
+  const usersTextLabel = createTool('Enter text ', 'text', 'users-text');
 
   const fontSizeLabel = createTool('Font size ', 'range', 'font-size');
   let fontSizeValue = document.createElement('span');
@@ -224,7 +233,7 @@ function showImage(clickedImageSrc, textSettings) {
         })
     }
 
-    document.querySelector('.buttons').style.display = 'block';
+    document.querySelector('.buttons').style.display = 'flex';
 }
 
 // instruction button event
