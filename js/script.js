@@ -12,14 +12,16 @@ let textSettings = {
     textX: enlargedImage.width / 2, 
     textY: enlargedImage.height / 2, 
     textFontSize: 30, 
-    textColor: 'orange'
+    textColor: 'orange',
+    textFont: 'Impact'
   },
   secondText: {
     text: 'Second text to edit',
     textX: enlargedImage.width / 2, 
     textY: enlargedImage.height / 2, 
     textFontSize: 30, 
-    textColor: 'orange'
+    textColor: 'orange',
+    textFont: 'Impact'
   }
 }
 
@@ -62,8 +64,10 @@ function imageDraw () {
 
   ctx.drawImage(imageToDraw, 0, 0);
 
-  let selectedText = document.querySelector('select');
-  ctx.font = textSettings[selectedText.value].textFontSize + 'px Impact';
+  let selectedText = document.querySelector('.select-text');
+
+  ctx.font = textSettings[selectedText.value].textFontSize + 'px '
+  + textSettings[selectedText.value].textFont;
   ctx.fillStyle = textSettings[selectedText.value].textColor;
   ctx.strokeStyle = 'white'
   ctx.lineWidth = 30;
@@ -75,7 +79,8 @@ function imageDraw () {
 
     Object.keys(textSettings).forEach(key => {
       if (selectedText.value !== key) {
-        ctx.font = textSettings[key].textFontSize + 'px Impact';
+        ctx.font = textSettings[key].textFontSize + 'px '
+        + textSettings[key].textFont;
         ctx.fillStyle = textSettings[key].textColor;
         ctx.strokeStyle = 'white'
         ctx.lineWidth = 30;
@@ -130,7 +135,9 @@ function createTextToolBox () {
   let closeButton = document.createElement('button');
   closeButton.append('close');
 
+  // select text to edit
   let select = document.createElement('select');
+  select.setAttribute('class', 'select-text')
 
   let firstOption = document.createElement('option');
   firstOption.value = 'firstText';
@@ -141,8 +148,36 @@ function createTextToolBox () {
   secondOption.value = 'secondText';
   secondOption.text = 'Second text';
 
+  // font dropdown
+  let selectFont = document.createElement('select');
+  selectFont.setAttribute('class', 'select-font')
+  let selectedFont = document.createElement('option');
+  selectedFont.value = 'Impact';
+  selectedFont.text = 'Impact';
+  selectedFont.selected = 'selected';
+
+  selectFont.append(selectedFont)
+
+  let FontArr = ['Kelly Slab', 'Artifika', 'Martel', 'Sans Serif', 'DM Serif Display', 'Monospace', 'Patrick Hand'];
+  FontArr.forEach(font => {
+    let newFontOption = document.createElement('option');
+    newFontOption.value = font;
+    newFontOption.text = font
+
+    selectFont.append(newFontOption);
+  })
   select.append(firstOption, secondOption);
-  tools.append(textColorLabel, usersTextLabel, fontSizeLabel, textXLabel, textYLabel, select, closeButton);
+
+  tools.append(
+    textColorLabel, 
+    usersTextLabel, 
+    fontSizeLabel, 
+    textXLabel, 
+    textYLabel, 
+    select, 
+    selectFont, 
+    closeButton
+    );
   toolBox.append(tools);
 
 let menu = document.querySelector("main");
@@ -155,7 +190,8 @@ let menu = document.querySelector("main");
   // do not allow font-size = 0
   document.getElementById('font-size').setAttribute('min', 12);
 
-  let selected = document.querySelector('select')
+  // text position
+  let selected = document.querySelector('.select-text')
   let text_x = document.getElementById('text_x');
   text_x.setAttribute('min', 0);
   text_x.setAttribute('max', imageToDraw.width - (textSettings[selected.value]['textFontSize'] * 2));
@@ -174,6 +210,7 @@ let menu = document.querySelector("main");
   textEditEvents(document.getElementById('font-size'), 'textFontSize');
   textEditEvents(document.getElementById('text_x'), 'textX');
   textEditEvents(document.getElementById('text_y'), 'textY');
+  textEditEvents(document.querySelector('.select-font'), 'textFont');
 }
 
 // creates label with input to edit text
