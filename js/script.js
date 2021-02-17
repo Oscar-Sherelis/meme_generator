@@ -285,3 +285,4 @@ document.querySelector('.manual')
   document.querySelector('.instruction-section').style.display = 'flex';
   document.querySelector('.content').style.display = 'none';
 })
+	
