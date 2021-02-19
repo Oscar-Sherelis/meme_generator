@@ -8,6 +8,7 @@ After selected meme will appear on the right side and toolbox will appear \
 ![TOOL_BOX](https://github.com/Oscar-Sherelis/meme_generator/blob/master/readme_images/toolbox.png) \
 To edit meme click on \
 ![EDIT](https://github.com/Oscar-Sherelis/meme_generator/blob/master/readme_images/edit.png) \
+*Note tollbox will appear only after clicked on existing meme on the left side \
 At the end to save meme click on \
 ![SAVE](https://github.com/Oscar-Sherelis/meme_generator/blob/master/readme_images/save.png)
 
